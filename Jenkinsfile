@@ -9,8 +9,8 @@ pipeline
             steps 
             {
                 echo 'Analysis stage: Analyze the source code using pylint' 
-                sh 'whoami'
-                //sh 'pylint src/'
+                sh 'echo $PATH'
+                sh 'pylint src/*.py'
             }
         }
         stage('test') 
