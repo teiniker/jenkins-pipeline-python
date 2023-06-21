@@ -9,8 +9,11 @@ pipeline
             steps 
             {
                 echo 'Analysis stage: Analyze the source code using pylint' 
-                sh 'echo $PATH'
-                sh 'pylint src/*.py'
+                sh 'python3 -m venv venv'
+                sh 'source venv/bin/activate'
+                sh 'pip3 install -r requirements.txt'
+                sh 'pylint multimeter/*.py'
+                sh 'deactivate'
             }
         }
         stage('test') 
