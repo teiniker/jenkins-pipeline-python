@@ -4,7 +4,7 @@ pipeline
 
     environment 
     {
-        PATH = "$PATH:/var/lib/jenkins/.local/bin"
+        PATH = "$PATH:/var/lib/jenkins/.local/bin:/usr/bin"
     }
 
     stages 
