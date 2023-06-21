@@ -6,11 +6,10 @@ from enum import Enum
 
 class MeasurementError(Exception):
     """ Custom exception. """
-    pass
 
 class DeviceError(Exception):
     """ Custom exception. """
-    pass
+    
 
 class MODE(Enum):
     """ Enumeration to specify the multimeter mode."""
