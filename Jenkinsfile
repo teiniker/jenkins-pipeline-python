@@ -2,6 +2,11 @@ pipeline
 {
     agent any 
 
+    environment 
+    {
+        PATH = "$PATH:/var/lib/jenkins/.local/bin"
+    }
+
     stages 
     {
         stage('setup') 
