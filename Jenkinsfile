@@ -8,9 +8,10 @@ pipeline
         {
             steps 
             {
+                echo 'Setup stage: Install pylint'
                 sh 'pip3 install -r requirements.txt'
             }
-
+        }
         stage('analyze') 
         {
             steps 
