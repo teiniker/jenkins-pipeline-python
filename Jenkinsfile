@@ -4,7 +4,7 @@ pipeline
 
     environment 
     {
-        PATH = "$PATH:/var/lib/jenkins/.local/bin:/usr/bin"
+        PATH = "$PATH:/var/lib/jenkins/.local/bin"
     }
 
     stages 
@@ -16,7 +16,7 @@ pipeline
                 echo 'Setup stage: Install dependencies in a virtual environment'
                 //sh 'pip3 install -r requirements.txt'
                 sh 'python3 -m venv venv'
-                sh './venv/bin/activate'
+                sh '. ./venv/bin/activate'
                 sh 'pip install -r requirements.txt'
             }
         }
