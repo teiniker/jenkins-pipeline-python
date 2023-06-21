@@ -21,7 +21,7 @@ pipeline
             steps 
             {
                 echo 'Test stage: run the test cases' 
-               	sh 'python3 src/multimeter_test.py'
+               	sh 'python3 multimeter/multimeter_test.py'
             }
         }
     }
