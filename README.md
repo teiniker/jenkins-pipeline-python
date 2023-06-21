@@ -49,12 +49,12 @@ Use your browser and go to: http://localhost:8080/
 In summary, we need the following settings for a new job: 
 * New Item 
 	* Pipeline
-* GitHub project: Project url: `https://github.com/teiniker/jenkins-pipeline-c.git/`
+* GitHub project: Project url: `https://github.com/teiniker/jenkins-pipeline-python.git/`
 * Build Triggers 
 	* Poll SCM: `H/1 * * * *`
 * Pipeleine: Pipeline Script from SCM: 
 	* SCM: Git 
-	* Repository URL: `https://github.com/teiniker/jenkins-pipeline-c.git` 
+	* Repository URL: `https://github.com/teiniker/jenkins-pipeline-python.git` 
 	* Branch Specifier: `*/main` 
 * Script Path: Jenkinsfile
 
@@ -68,28 +68,53 @@ A Jenkins pipeline consists of two kinds of elements:
 * **Stage**: A logical separation of steps that groups conceptually distinct sequences of steps.
  	For example, Build, Test, and Deploy, used to visualize the Jenkins pipeline progress.
 
-_Example_: Jenkins commit pipeline (checkout, build, and unit test)
+_Example_: Jenkins commit pipeline (checkout, analyze, and unit tests)
 ```
 pipeline 
 {
     agent any 
-    
+
+    environment 
+    {
+        PATH = "$PATH:/var/lib/jenkins/.local/bin"
+    }
+
     stages 
     {
-        stage('build') 
+        stage('setup-env') 
         {
             steps 
             {
-                sh 'make'
+                echo 'Setup stage: Install dependencies in a virtual environment'
+                sh 'python3 -m venv venv'
+                sh '. ./venv/bin/activate'
+                sh 'pip install -r requirements.txt'
+            }
+        }
+        stage('analyze') 
+        {
+            steps 
+            {
+                echo 'Analysis stage: Analyze the source code using pylint' 
+                sh 'pylint multimeter/multimeter.py'
             }
         }
         stage('test') 
         {
             steps 
             {
-               	sh 'build/stack_test'
+                echo 'Test stage: run the test cases' 
+               	sh 'python3 multimeter/multimeter_test.py'
             }
         }
+        stage('teardown-env') 
+        {
+            steps 
+            {
+                echo 'Teardown stage: Remove virtual environment'
+                //sh 'deactivate'
+            }
+        }    
     }
 }
 ```
@@ -132,44 +157,14 @@ Steps define the operations that are executed, so they actually tell Jenkins wha
 * **script**: This executes a block of the Groovy-based code that can be used for some non-trivial scenarios where flow control is needed.
 
 
-## Commit Pipeline
 
-The most **basic Continuous Integration process** is called a commit pipeline.
-
-This phase starts with a commit (or push in Git) to the main repository and results in a report about 
-the build success or failure. 
-
-Since it runs after each change in the code, **the build should take no more than five minutes** and 
-should consume a reasonable amount of resources.
-
-The commit phase works as follows: a developer checks in the code to the repository, the Continuous Integration server detects the change, and the build starts. 
-The most fundamental commit pipeline contains three stages: 
-* **Checkout**: This stage downloads the source code from the repository. 
-
-* **Compile**: This stage compiles the source code. 
-
-* **Unit test**: This stage runs a suite of unit tests.
-
-
-## Static Code Analysis 
-
-**Cppcheck** is a static analysis tool for C/C++ code. 
-It provides unique code analysis to detect bugs and focuses on detecting undefined 
-behaviour and dangerous coding constructs.
-
-Using the package manager, we can install cppcheck in one step:
-```
-$ sudo apt install cppcheck
-
-$ cppcheck --version
-Cppcheck 2.3
-```
 
 
 ## References
 
 * Python Project Layout
-    * [Python Application Layouts: A Reference](https://realpython.com/python-application-layouts/)
+    * [RealPython: Python Application Layouts: A Reference](https://realpython.com/python-application-layouts/)
+    * [RealPython: Python Virtual Environments: A Primer](https://realpython.com/python-virtual-environments-a-primer/)
 
 * Jenkins
     * [YouTube: How to Install Jenkins](https://youtu.be/CEyfsQq3QEM)
