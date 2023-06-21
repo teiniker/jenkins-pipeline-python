@@ -14,7 +14,6 @@ pipeline
             steps 
             {
                 echo 'Setup stage: Install dependencies in a virtual environment'
-                //sh 'pip3 install -r requirements.txt'
                 sh 'python3 -m venv venv'
                 sh '. ./venv/bin/activate'
                 sh 'pip install -r requirements.txt'
@@ -41,7 +40,7 @@ pipeline
             steps 
             {
                 echo 'Teardown stage: Remove virtual environment'
-                sh '. ./deactivate'
+                //sh 'deactivate'
             }
         }    
     }
