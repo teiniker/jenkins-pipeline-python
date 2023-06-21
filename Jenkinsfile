@@ -9,6 +9,7 @@ pipeline
             steps 
             {
                 echo 'Analysis stage: Analyze the source code using pylint' 
+                sh 'whoami'
                 //sh 'pylint src/'
             }
         }
