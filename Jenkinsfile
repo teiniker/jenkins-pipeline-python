@@ -9,12 +9,15 @@ pipeline
 
     stages 
     {
-        stage('setup') 
+        stage('setup-env') 
         {
             steps 
             {
-                echo 'Setup stage: Install pylint'
-                sh 'pip3 install -r requirements.txt'
+                echo 'Setup stage: Install dependencies in a virtual environment'
+                //sh 'pip3 install -r requirements.txt'
+                sh 'python3 -m venv venv'
+                sh 'source venv/bin/activate'
+                sh 'pip install -r requirements.txt'
             }
         }
         stage('analyze') 
@@ -33,5 +36,13 @@ pipeline
                	sh 'python3 multimeter/multimeter_test.py'
             }
         }
+        stage('teardown-env') 
+        {
+            steps 
+            {
+                echo 'Teardown stage: Remove virtual environment'
+                sh 'deactivate'
+            }
+        }    
     }
 }

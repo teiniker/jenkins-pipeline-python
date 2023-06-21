@@ -168,16 +168,19 @@ Cppcheck 2.3
 
 ## References
 
-* [YouTube: How to Install Jenkins](https://youtu.be/CEyfsQq3QEM)
-* [YouTube: Complete Jenkins Pipeline Tutorial](https://youtu.be/7KCS70sCoK0)
+* Python Project Layout
+    * [Python Application Layouts: A Reference](https://realpython.com/python-application-layouts/)
 
-* [Getting started with Pipeline](https://www.jenkins.io/doc/book/pipeline/getting-started/)
+* Jenkins
+    * [YouTube: How to Install Jenkins](https://youtu.be/CEyfsQq3QEM)
+    * [YouTube: Complete Jenkins Pipeline Tutorial](https://youtu.be/7KCS70sCoK0)
 
-* [Using a Jenkinsfile](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/)
+    * [Getting started with Pipeline](https://www.jenkins.io/doc/book/pipeline/getting-started/)
 
-* Rafał Leszko. **Continuous Delivery with Docker and Jenkins: Create secure applications by building complete CI/CD pipelines**. Packt Publishing, 2nd Edition 2019.
+    * [Using a Jenkinsfile](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/)
 
-* [Cppcheck](https://cppcheck.sourceforge.io/)
+    * Rafał Leszko. **Continuous Delivery with Docker and Jenkins: Create secure applications by building complete CI/CD pipelines**. Packt Publishing, 2nd Edition 2019.
+
 
 *Egon Teiniker, 2022-2023, GPL v3.0* 
 		
