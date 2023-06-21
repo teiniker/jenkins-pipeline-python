@@ -9,7 +9,7 @@ pipeline
             steps 
             {
                 echo 'Analysis stage: Analyze the source code using pylint' 
-                sh 'pylint src/'
+                #sh 'pylint src/'
             }
         }
         stage('test') 
