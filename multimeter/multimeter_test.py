@@ -29,7 +29,7 @@ class MultimeterTest(unittest.TestCase):
     def test_multimeter_measurement(self):
         # Setup
         device = Mock()  # Mock() replaces Device
-        device.get_measurement_value.return_value = 5.0
+        device.get_measurement_value.return_value = 4.0
         multimeter = Multimeter(device)
 
         # Exercise
