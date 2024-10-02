@@ -40,7 +40,7 @@ pipeline
             steps 
             {
                 echo 'Teardown stage: Remove virtual environment'
-                sh 'deactivate'
+                //sh 'deactivate'
             }
         }    
     }
