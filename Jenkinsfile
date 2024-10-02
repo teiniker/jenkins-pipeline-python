@@ -24,7 +24,7 @@ pipeline
             steps 
             {
                 echo 'Analysis stage: Analyze the source code using pylint' 
-                sh 'pylint multimeter/multimeter.py'
+                sh 'pylint multimeter/multimeter.py --output-format=json:pylint-report.json'
             }
         }
         stage('test') 
