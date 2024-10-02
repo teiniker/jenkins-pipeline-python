@@ -8,7 +8,7 @@ class MeasurementError(Exception):
     """ Custom exception. """
 
 class DeviceError(Exception):
-    pass
+    """ Custom exception. """
 
 class MODE(Enum):
     """ Enumeration to specify the multimeter mode."""
