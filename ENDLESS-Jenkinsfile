@@ -1,0 +1,93 @@
+pipeline 
+{
+    agent any 
+    
+    stages 
+    {
+        stage('setup-env') 
+        {
+            agent {
+                docker { image "${env.NEXUS_URL_DOCKER}/repository/docker/docker-sca" }
+            }
+            steps 
+            {
+                echo 'Setup stage: Install dependencies in a virtual environment'
+                sh '''python3 --version
+                python3 -m venv venv
+                . venv/bin/activate
+                python3 -c "import sys; print(sys.prefix)"
+                pip3 install --break-system-packages -r requirements.txt
+                '''
+            }
+        }
+        stage('analyze') 
+        {
+            agent {
+                docker { image "${env.NEXUS_URL_DOCKER}/repository/docker/docker-sca" }
+            }    
+            steps 
+            {
+                echo 'Analysis stage: Analyze the source code using pylint' 
+                sh '''
+                . venv/bin/activate
+                pylint multimeter/multimeter.py --output-format=json:pylint-report.json
+                '''
+            }
+        }
+        stage('test') 
+        {
+            agent {
+                docker { image "${env.NEXUS_URL_DOCKER}/repository/docker/docker-sca" }
+            }
+            steps 
+            {
+                echo 'Test stage: run the test cases' 
+               	sh '''
+                . venv/bin/activate
+                python3 multimeter/multimeter_test.py
+                '''
+            }
+        }
+        stage('build') 
+        {
+            agent {
+                docker { image "${env.NEXUS_URL_DOCKER}/repository/docker/docker-sca" }
+            }
+            steps {
+                echo 'Build stage: Create wheel file from the source code'
+                sh '''
+                    . venv/bin/activate
+                    pip3 install wheel
+                    python3 setup.py bdist_wheel  # Build the wheel file
+                '''
+            }
+        }
+        stage('archive') {
+            agent {
+                docker { image "${env.NEXUS_URL_DOCKER}/repository/docker/docker-sca" }
+            }
+            steps {
+                echo 'Archiving wheel files'
+                archiveArtifacts artifacts: 'dist/*.whl', allowEmptyArchive: true
+            }
+        }
+        stage('docker-build') {
+            agent { label 'agent2' }
+            steps {
+                echo 'Docker Build stage: Build a Docker image with the wheel file'
+                sh '''
+                    docker build -t multimeter:latest .
+                '''
+            }
+        }
+
+        stage('teardown-env') 
+        {
+            steps 
+            {
+                echo 'Teardown stage: Remove virtual environment'
+                //sh 'deactivate'
+            }
+        }    
+    }
+}
