@@ -30,13 +30,5 @@ pipeline
                	sh 'python multimeter/multimeter_test.py'
             }
         }
-        stage('teardown-env') 
-        {
-            steps 
-            {
-                echo 'Teardown stage: Remove virtual environment'
-                sh 'deactivate'
-            }
-        }    
     }
 }
