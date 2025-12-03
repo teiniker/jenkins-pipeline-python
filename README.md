@@ -1,48 +1,5 @@
-# Jenkins Pipeline for Python Applications
+# Jenkins Pipeline Python
 
-## Setup
-```
-    $ sudo apt update
-    $ sudo apt -y upgrade
-
-    Jenkins Debian Packages
-    https://pkg.jenkins.io/debian-stable/
-
-    $ curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee \
-        /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-
-    $ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-        https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-        /etc/apt/sources.list.d/jenkins.list > /dev/null
-
-    $ sudo apt-get update
-    $ sudo apt-get install fontconfig openjdk-11-jre
-    $ sudo apt-get install jenkins
-```
-
-Per default **Jenkins is running as a service** which is **enabled on system start**.
-```
-	$ sudo systemctl status jenkins.service
-	● jenkins.service - Jenkins Continuous Integration Server
-		Loaded: loaded (/lib/systemd/system/jenkins.service; enabled; vendor preset: enabled)
-		Active: active (running) since Sun 2022-05-01 12:04:49 CEST; 5h 33min ago
-	    Main PID: 54753 (java)
-		Tasks: 40 (limit: 4663)
-		Memory: 506.4M
-			CPU: 1min 40.953s
-		CGroup: /system.slice/jenkins.service
-				└─54753 /usr/bin/java -Djava.awt.headless=true -jar /usr/share/java/jenkins.war --webroot=/var/cache/jenkins/war --httpPort=8080
-```
-
-
-To **disable the service** and **manually start** it if needed, type:
-```
-$ sudo systemctl disable jenkins.service
-
-$ sudo systemctl start jenkins.service
-```
-
-Use your browser and go to: http://localhost:8080/
 
 ## Jenkins Job Configuration
 
