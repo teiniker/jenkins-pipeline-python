@@ -4,16 +4,6 @@ pipeline
 
     stages 
     {
-        stage('setup-env') 
-        {
-            steps 
-            {
-                echo 'Setup stage: Install dependencies in a virtual environment'
-                sh 'python -m venv venv'
-                sh '. venv/bin/activate'
-                sh 'pip install -r requirements.txt'
-            }
-        }
         stage('analyze') 
         {
             steps 

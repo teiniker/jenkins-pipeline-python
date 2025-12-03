@@ -1,5 +1,70 @@
 # Jenkins Pipeline Python
 
+In this example we see a Python project that is built using Jenkins.
+
+* `Jenkinsfile`: The pipeline consists of three stages
+    - setup-env: Install dependencies in a virtual environment
+    - analyze: Analyze the source code using pylint
+    - test: Run the test executable
+
+* `Dockerfile`: Jenkins uses an agent in the form of a Docker container 
+    for the build process.
+
+
+## Jenkins Pipeline (Jenkinsfile)
+
+```yml
+pipeline 
+{
+    agent { dockerfile true }
+
+    stages 
+    {
+        stage('setup-env') 
+        {
+            steps 
+            {
+                echo 'Setup stage: Install dependencies in a virtual environment'
+                sh 'python -m venv venv'
+                sh '. venv/bin/activate'
+                sh 'pip install -r requirements.txt'
+            }
+        }
+        stage('analyze') 
+        {
+            steps 
+            {
+                echo 'Analysis stage: Analyze the source code using pylint' 
+                sh 'pylint multimeter/multimeter.py --output-format=json:pylint-report.json'
+            }
+        }
+        stage('test') 
+        {
+            steps 
+            {
+                echo 'Test stage: run the test cases' 
+               	sh 'python multimeter/multimeter_test.py'
+            }
+        }
+    }
+}
+```
+
+## Docker Agent
+
+The agent is described by the following Dockerfile:
+
+```yml
+FROM python:3-alpine
+
+WORKDIR /app
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+```
+
+This Docker image installs dependencies as defined in a `requirements.txt` 
+file.
+
 
 ## Jenkins Job Configuration
 
