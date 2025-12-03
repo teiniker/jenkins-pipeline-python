@@ -2,8 +2,7 @@
 
 In this example we see a Python project that is built using Jenkins.
 
-* `Jenkinsfile`: The pipeline consists of three stages
-    - setup-env: Install dependencies in a virtual environment
+* `Jenkinsfile`: The pipeline consists of two stages
     - analyze: Analyze the source code using pylint
     - test: Run the test executable
 
@@ -20,16 +19,6 @@ pipeline
 
     stages 
     {
-        stage('setup-env') 
-        {
-            steps 
-            {
-                echo 'Setup stage: Install dependencies in a virtual environment'
-                sh 'python -m venv venv'
-                sh '. venv/bin/activate'
-                sh 'pip install -r requirements.txt'
-            }
-        }
         stage('analyze') 
         {
             steps 
