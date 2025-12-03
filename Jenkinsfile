@@ -1,11 +1,6 @@
 pipeline 
 {
-    agent any 
-
-    environment 
-    {
-        PATH = "$PATH:/var/lib/jenkins/.local/bin"
-    }
+    agent { dockerfile true }
 
     stages 
     {
@@ -16,7 +11,7 @@ pipeline
                 echo 'Setup stage: Install dependencies in a virtual environment'
                 sh 'python3 -m venv venv'
                 sh '. venv/bin/activate'
-                sh 'pip3 install --break-system-packages -r requirements.txt'
+                sh 'pip install -r requirements.txt'
             }
         }
         stage('analyze') 
@@ -32,7 +27,7 @@ pipeline
             steps 
             {
                 echo 'Test stage: run the test cases' 
-               	sh 'python3 multimeter/multimeter_test.py'
+               	sh 'python multimeter/multimeter_test.py'
             }
         }
         stage('teardown-env') 

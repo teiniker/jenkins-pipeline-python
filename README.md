@@ -18,6 +18,13 @@ We need the following settings for a new Jenkins job:
       - Script Path: Jenkinsfile
 
 
+
+## Docker Agent
+The agent is described by the following Dockerfile:
+
+
+
+
 ## References
 
 * Python Project Layout
