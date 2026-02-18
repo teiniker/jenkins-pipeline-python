@@ -69,7 +69,7 @@ We need the following settings for a new Jenkins job:
         - SCM: Git 
         - Repository URL: `https://github.com/teiniker/jenkins-pipeline-python.git` 
         - Branches to build: `*/main` 
-      - Script Path: Jenkinsfile
+      - Script Path: Jenkinsfile-agent-docker
 
 
 ## References
